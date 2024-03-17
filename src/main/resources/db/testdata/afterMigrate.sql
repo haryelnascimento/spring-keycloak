@@ -1,0 +1,14 @@
+--SET foreign_key_checks = 0;
+--
+--lock tables ADDRESS WRITE;
+--
+--DELETE FROM ADDRESS;
+--
+--SET foreign_key_checks = 1;
+--
+--ALTER TABLE ADDRESS auto_increment = 1;
+--
+--INSERT INTO ADDRESS (ID, STREET, NEIGHBORHOOD, NUMBER, COMPLEMENT, CEP, CITY, UF, COUNTRY, CREATED_AT, UPDATED_AT) values
+--(1, 'Rua 1', 'Bairro 1', '123', 'Complemento 1', '12345-678', 'Cidade 1', 'UF1', 'País 1', '2021-01-01 00:00:00', null);
+--
+--unlock tables;
