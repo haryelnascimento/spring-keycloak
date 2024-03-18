@@ -1,79 +1,30 @@
 # README
 
-Este repositório contém uma configuração de Docker Compose para implantar um conjunto composto por PostgreSQL, OpenLDAP, phpLDAPadmin, Keycloak, API Rest Spring Boot e Nginx.
-## Services
+Este repositório fornece uma configuração base para iniciar um projeto em Spring Boot com Keycloak como servidor de autenticação e autorização, com a possibilidade de adicionar uma federação de usuários a um servidor LDAP para gerenciamento de usuários e grupos.
 
-### PostgreSQL
+<p>
+  <img src="https://gitlab.ungp.softplan.com.br/cetesb/docs/-/raw/main/Tutoriais%20Devs/images/download-kubeconfigs.jpg?ref_type=heads" alt="Diagram">
+</p>
 
-- **Image:** postgres:latest
-- **Environment Variables:**
-    - `POSTGRES_USER`: postgres
-    - `POSTGRES_PASSWORD`: postgres
-- **Ports:** 5432
-- **Volumes:** `./init.sql:/docker-entrypoint-initdb.d/init.sql`, `db-data:/var/lib/postgresql/data/`
-- **Health Check:** Checks if PostgreSQL is ready using `pg_isready -U postgres`
+### Frameworks utilizados:
 
-### OpenLDAP
+## Docker Compose
+O Docker Compose é uma ferramenta que permite definir e gerenciar aplicações Docker multi-contêiner em um único arquivo de configuração. Ele simplifica o processo de definir os serviços, redes e volumes necessários para implantar uma aplicação composta por múltiplos contêineres.
 
-- **Image:** osixia/openldap:1.5.0
-- **Environment Variables:**
-    - `LDAP_LOG_LEVEL`: "256"
-    - `LDAP_ORGANISATION`: "Example Inc."
-    - `LDAP_DOMAIN`: "example.org"
-    - `LDAP_ADMIN_PASSWORD`: "admin"
-    - `LDAP_CONFIG_PASSWORD`: "config"
-    - `LDAP_READONLY_USER`: "false"
-    - LDAP_TLS configuration
-- **Ports:** 389, 636
-- **Volumes:** `/var/lib/ldap`, `/etc/ldap/slapd.d`, `/container/service/slapd/assets/certs/`
-- **Domainname:** example.org
-- **Hostname:** ldap-server
+## PostgreSQL
+O PostgreSQL é um sistema de gerenciamento de banco de dados relacional de código aberto e altamente extensível. Neste repositório, o PostgreSQL é usado como banco de dados principal para armazenar dados persistentes. É um componente essencial para muitas aplicações que necessitam de armazenamento de dados.
 
-### phpLDAPadmin
+## OpenLDAP e phpLDAPadmin
+O OpenLDAP é um servidor de diretórios de código aberto, que implementa o protocolo LDAP (Lightweight Directory Access Protocol). Ele é usado para armazenar e gerenciar informações de diretório, como informações de usuário e grupo. O phpLDAPadmin é uma interface web para administrar servidores LDAP de forma intuitiva e simplificada. Juntos, o OpenLDAP e o phpLDAPadmin fornecem um meio poderoso de gerenciar informações de diretório em um ambiente de rede.
 
-- **Image:** osixia/phpldapadmin:latest
-- **Environment Variables:**
-    - `PHPLDAPADMIN_LDAP_HOSTS`: "openldap"
-    - `PHPLDAPADMIN_HTTPS`: "false"
-- **Ports:** 8082
-- **Depends On:** openldap
+## Keycloak
+O Keycloak é uma solução de código aberto para gerenciamento de identidade e acesso baseada em padrões como OAuth 2.0 e OpenID Connect. Ele oferece recursos de autenticação, autorização e gerenciamento de identidade para aplicativos web e serviços. Neste repositório, o Keycloak é utilizado para fornecer serviços de autenticação e autorização para a API Rest Spring Boot e outros componentes da aplicação.
 
-### Keycloak
+## API Rest Spring Boot
+A API Rest Spring Boot é uma aplicação baseada em Spring Boot que fornece uma API RESTful para interagir com os dados armazenados no PostgreSQL. O Spring Boot é um framework Java popular para criar aplicativos web e serviços com facilidade. Neste contexto, a API Rest Spring Boot é responsável por fornecer acesso aos dados da aplicação de forma segura e eficiente.
 
-- **Image:** quay.io/keycloak/keycloak:latest
-- **Ports:** 8081
-- **Volumes:** `./keycloak/config:/opt/keycloak/data/import`
-- **Environment Variables:**
-    - Keycloak configuration
-- **Entrypoint:** "/opt/keycloak/bin/kc.sh start-dev --import-realm --verbose"
-- **Depends On:** postgres (with health check)
-
-### App
-
-- **Build:** ./
-- **Environment Variables:**
-    - `DB_HOST`: postgres
-- **Ports:** 8080
-- **Depends On:** postgres, keycloak
-
-### Nginx
-
-- **Build:** ./nginx
-- **Image:** nginx
-- **Ports:** 80
-- **Depends On:** app
-
-## Networks
-
-- **Name:** my-network
-- **Driver:** bridge
-
-## Volumes
-
-- **Name:** db-data
-
----
-Feel free to modify or extend this setup according to your needs.
+## Nginx
+O Nginx é um servidor web de alto desempenho e proxy reverso. Ele é usado neste repositório para servir arquivos estáticos e atuar como um proxy para rotear solicitações para a API Rest Spring Boot e outros componentes da aplicação. O Nginx é conhecido por sua eficiência e escalabilidade, sendo uma escolha comum para implantar e balancear cargas em aplicações web.
 
 ### Construir os Contêineres
 
