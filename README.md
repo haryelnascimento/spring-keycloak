@@ -1,9 +1,9 @@
 # README
 
-Este repositório fornece uma configuração base para iniciar um projeto em Spring Boot com Keycloak como servidor de autenticação e autorização, com a possibilidade de adicionar uma federação de usuários a um servidor LDAP para gerenciamento de usuários e grupos.
+Este repositório fornece uma configuração base para iniciar um projeto em Spring Boot _(Versão 3.2.3)_ com Keycloak _(Versão 24.0.0)_ como servidor de autenticação e autorização, com a possibilidade de adicionar uma federação de usuários a um servidor LDAP para gerenciamento de usuários e grupos.
 
 <p>
-  <img src="https://gitlab.ungp.softplan.com.br/cetesb/docs/-/raw/main/Tutoriais%20Devs/images/download-kubeconfigs.jpg?ref_type=heads" alt="Diagram">
+  <img src="https://raw.githubusercontent.com/haryelnascimento/spring-keycloak/master/imge/diagram.png" alt="Diagram">
 </p>
 
 ### Frameworks utilizados:
@@ -20,7 +20,7 @@ O OpenLDAP é um servidor de diretórios de código aberto, que implementa o pro
 ## Keycloak
 O Keycloak é uma solução de código aberto para gerenciamento de identidade e acesso baseada em padrões como OAuth 2.0 e OpenID Connect. Ele oferece recursos de autenticação, autorização e gerenciamento de identidade para aplicativos web e serviços. Neste repositório, o Keycloak é utilizado para fornecer serviços de autenticação e autorização para a API Rest Spring Boot e outros componentes da aplicação.
 
-## API Rest Spring Boot
+## Spring Boot
 A API Rest Spring Boot é uma aplicação baseada em Spring Boot que fornece uma API RESTful para interagir com os dados armazenados no PostgreSQL. O Spring Boot é um framework Java popular para criar aplicativos web e serviços com facilidade. Neste contexto, a API Rest Spring Boot é responsável por fornecer acesso aos dados da aplicação de forma segura e eficiente.
 
 ## Nginx
