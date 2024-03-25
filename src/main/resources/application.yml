@@ -1,6 +1,13 @@
 server:
   port: 8080
 
+#springdoc:
+#  api-docs:
+#    path: '/api-docs'
+
+swagger-ui:
+  path: '/api-docs-ui.html'
+
 spring:
   datasource:
     hikari:
@@ -10,7 +17,7 @@ spring:
       pool-name: plataforma-database-hikari
       auto-commit: false
       connection-timeout: 30000
-    url: jdbc:postgresql://${DB_HOST:localhost}:5432/app_database
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/imob_database
     username: postgres
     password: postgres
     type: com.zaxxer.hikari.HikariDataSource
@@ -25,17 +32,27 @@ spring:
   flyway:
     locations: classpath:db/migration,classpath:db/testdata
 
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: my-client
-            client-secret: t0d9kUEVEjeZav5FaM1BtBUycO1iNWYM
-            scope: openid, profile, email
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8081/realms/my-realm
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8081/realms/my-realm
+  swagger-ui:
+    oauth:
+      clientId: algafood-web
+      clientSecret: web123
+      use-pkce-with-authorization-code-grant: true
+      use-basic-authentication-with-access-code-grant: true
+
+jwt:
+  private:
+    key: 'classpath:app.key'
+  public:
+    key: 'classpath:app.pub'
+
+imob:
+  storage:
+    s3:
+      key-id: ${S3_KEY_ID}
+      key-secret: ${S3_KEY_SECRET}
+      bucket: 'imob.bucket'
+      region: 'us-east-1'
+    image:
+      download-url: 'https://imob.bucket.s3.amazonaws.com'
+    document:
+      download-url: 'http://localhost:8080/downloads'
